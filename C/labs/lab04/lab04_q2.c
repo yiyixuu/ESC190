@@ -31,6 +31,25 @@ double my_atof(char *line) {
     return result * sign;
 }
 
+int count_digits(char *line) {
+    int start = 0;
+    while(line[start]!= '.') {
+        start++;
+    }
+    int i = start+1;
+
+    int digits = 0;
+    while(line[i] >= '0' && line[i] <= '9') {
+        digits++;
+        i++;
+    }
+    return digits;
+}
+
+int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
 int main() {
     char filename[] = "constants.txt";
 
@@ -41,11 +60,13 @@ int main() {
         exit(1);
     }
     double sum = 0.0;
+    int decimal_digits = 0;
     while (fgets(line, sizeof(line), fp) != NULL) {
         sum += my_atof(line);
+        decimal_digits = max(decimal_digits, count_digits(line));
     }
 
-    printf("%.100f\n", sum);
+    printf("%.*f\n", decimal_digits, sum);
 
     fclose(fp);
 }
