@@ -7,7 +7,7 @@ void change_int(int *p_a) {
 }
 
 // Q10
-void change_p_int(int **p_p_a) {
+void change_int2(int **p_p_a) {
     **p_p_a = 46;
 }
 
@@ -71,8 +71,8 @@ int main() {
     p_p_a = &p_a;
 
     // Q12
-    change_p_int(&p_a); 
-    change_p_int(p_p_a);
+    change_int2(&p_a); 
+    change_int2(p_p_a);
 
     // Q13
     change_int_ptr(&p_a);
