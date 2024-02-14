@@ -2,13 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_list(IntList *list) {
-    for(int i = 0; i < list->size; i++) {
-        printf("%d ", list_get(list, i));
-    }
-    printf("\n");
-}
-
 int main() {
     int data[] = {1, 2, 3, 4, 5};
     IntList *list;

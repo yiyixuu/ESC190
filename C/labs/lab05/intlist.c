@@ -9,6 +9,7 @@
 // its data to equal the data in data_arr, and set its size
 // Store the address of the new object in *p_IntList
 void create_list_from_data(IntList **p_IntList, int *data_arr, int size) {
+    *p_IntList = (IntList *) malloc(sizeof(IntList));
     (*p_IntList)->data = (int*) malloc(size * sizeof(int));
 
     if ((*p_IntList)->data == NULL) {
@@ -96,18 +97,4 @@ void print_list(IntList *list) {
         }
     }
     printf("]\n");
-}
-
-int main() {
-    int data[] = {1, 2, 3, 4, 5};
-    IntList *list;
-    create_list_from_data(&list, data, 5);
-    print_list(list);
-    list_append(list, 6);
-    print_list(list);
-    list_insert(list, 7, 2);
-    print_list(list);
-    list_delete(list, 2);
-    print_list(list);
-    return 0;
 }
