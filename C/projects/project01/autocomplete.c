@@ -22,9 +22,7 @@ void read_in_terms(term **terms, int *pnterms, char *filename) {
         exit(1);
     }
 
-    char num_terms[200];
-    fgets(num_terms, sizeof(num_terms), file);
-    *pnterms = atoi(num_terms);
+    fscanf(file, "%d", pnterms);
 
     *terms = (term *) malloc(*pnterms * sizeof(term));
 
@@ -41,5 +39,9 @@ int main() {
     term *terms;
     int nterms;
     read_in_terms(&terms, &nterms, "cities.txt");
+    printf("%d\n", nterms);
+    for(int i = 0; i < 5; i++) {
+        printf("%s %lf\n", terms[i].term, terms[i].weight);
+    }
     return 0;
 }
