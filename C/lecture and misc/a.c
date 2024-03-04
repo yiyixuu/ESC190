@@ -1,13 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-    char *p = (char *) malloc(10000);
-    // printf("%c\n", p[50000000]); 
-    printf("%s\n", p+10000-3); // no null character at the end, will keep printing
+typedef struct Node {
+    int data;
+    struct Node *next;
+} Node;
 
-    int ** p_p_int;
-    p_p_int = (int **) malloc(2*sizeof(int *));
-    int * p_int = *p_p_int;
-    int my_int = *p_int; // nonsense address, segfault
+void add_to_beginning(Node **head, int data) {
+    Node *new_node = (Node *)malloc(sizeof(Node));
+    new_node->data = data;
+    new_node->next = *head;
+    *head = new_node;
+}
+
+int main() {
+    Node *head = (Node *)malloc(sizeof(Node));
+    head->data = 1;
+    head->next = NULL;
+    add_to_beginning(&head, 2);
+    //print the list
+    Node *current = head;
+    while (current != NULL) {
+        printf("%d\n", current->data);
+        current = current->next;
+    }
+    
+    return 0;
 }
