@@ -1,7 +1,8 @@
 #include "seamcarving.h"
-#include "c_img.c"
+// #include "c_img.c"
 #include <stdio.h>
 #include <float.h>
+#include <math.h>
 
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 #define min(x, y) (((x) < (y)) ? (x) : (y))
@@ -30,7 +31,7 @@ void calc_energy(struct rgb_img *im, struct rgb_img **grad) {
 
             double energy = sqrt(delta_x_squared + delta_y_squared);
 
-            u_int8_t dual_gradient_energy = (u_int8_t)(energy / 10);
+            uint8_t dual_gradient_energy = (uint8_t)(energy / 10);
 
             set_pixel(*grad, i, j, dual_gradient_energy, dual_gradient_energy, dual_gradient_energy);
         }
@@ -106,74 +107,4 @@ void remove_seam(struct rgb_img *src, struct rgb_img **dest, int *path) {
         }
     }
 
-}
-
-int main() {
-    struct rgb_img *im;
-    struct rgb_img *cur_im;
-    struct rgb_img *grad;
-    double *best;
-    int *path;
-
-    // read_in_img(&im, "HJoceanSmall.bin");
-    // read_in_img(&im, "3x4.bin");
-    read_in_img(&im, "6x5.bin");
-
-    for(int i = 0; i < im->height; i++) {
-        for(int j = 0; j < im->width; j++) {
-            for(int k = 0; k < 3; k++) {
-                printf("%d ", get_pixel(im, i, j, k));
-            }
-        }
-        printf("\n");
-    }
-
-    calc_energy(im, &grad);
-
-    printf("grad\n");
-    print_grad(grad);
-
-    printf("best\n");
-    // for(int i = 0; i < 5; i++){
-    //     printf("i = %d\n", i);
-    //     calc_energy(im,  &grad);
-    dynamic_seam(grad, &best);
-    for (int i = 0; i < grad->height; i++)
-    {
-        for (int j = 0; j < grad->width; j++)
-        {
-            printf("%f ", best[i * grad->width + j]);
-        }
-        printf("\n");
-    }
-
-    recover_path(best, grad->height, grad->width, &path);
-    for (int i = 0; i < grad->height; i++) {
-        printf("%d ", path[i]);
-    }
-    printf("\n");
-    remove_seam(im, &cur_im, path);
-
-    for(int i = 0; i < cur_im->height; i++) {
-        for(int j = 0; j < cur_im->width; j++) {
-            for(int k = 0; k < 3; k++) {
-                printf("%d ", get_pixel(cur_im, i, j, k));
-            }
-        }
-        printf("\n");
-    }
-
-
-
-    //     char filename[200];
-    //     sprintf(filename, "img%d.bin", i);
-    //     write_img(cur_im, filename);
-
-    //     destroy_image(im);
-    //     destroy_image(grad);
-    //     free(best);
-    //     free(path);
-    //     im = cur_im;
-    // }
-    // destroy_image(im);
 }
