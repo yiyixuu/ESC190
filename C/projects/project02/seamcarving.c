@@ -1,5 +1,5 @@
 #include "seamcarving.h"
-// #include "c_img.c"
+#include "c_img.c"
 #include <stdio.h>
 #include <float.h>
 #include <math.h>
@@ -8,10 +8,7 @@
 #define min(x, y) (((x) < (y)) ? (x) : (y))
 
 void calc_energy(struct rgb_img *im, struct rgb_img **grad) {
-    *grad = (struct rgb_img *)malloc(sizeof(struct rgb_img));
-    (*grad)->width = im->width;
-    (*grad)->height = im->height;
-    (*grad)->raster = (uint8_t *)malloc(3 * im->width * im->height * sizeof(uint8_t));
+    create_img(grad, im->height, im->width);
 
     for (int i = 0; i < im->height; i++) { // y
         for (int j = 0; j < im->width; j++) { // x
@@ -107,4 +104,34 @@ void remove_seam(struct rgb_img *src, struct rgb_img **dest, int *path) {
         }
     }
 
+}
+
+int main() {
+    struct rgb_img *im;
+    struct rgb_img *cur_im;
+    struct rgb_img *grad;
+    double *best;
+    int *path;
+
+    read_in_img(&im, "chase.bin");
+    
+    for(int i = 0; i < 300; i++){
+        printf("i = %d\n", i);
+        calc_energy(im,  &grad);
+        dynamic_seam(grad, &best);
+        recover_path(best, grad->height, grad->width, &path);
+        remove_seam(im, &cur_im, path);
+
+        char filename[200];
+        sprintf(filename, "chase%d.bin", i);
+        write_img(cur_im, filename);
+
+
+        destroy_image(im);
+        destroy_image(grad);
+        free(best);
+        free(path);
+        im = cur_im;
+    }
+    destroy_image(im);
 }
