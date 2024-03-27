@@ -9,18 +9,22 @@ void change_brightness(struct rgb_img *im, struct rgb_img **dest, int factor) {
             int g = get_pixel(im, i, j, 1);
             int b = get_pixel(im, i, j, 2);
 
-            r *= factor;
-            g *= factor;
-            b *= factor;
-
-            if(r > 255) {
+            if (r * factor > 255) {
                 r = 255;
+            } else {
+                r *= factor;
             }
-            if(g > 255) {
+
+            if (g * factor > 255) {
                 g = 255;
+            } else {
+                g *= factor;
             }
-            if(b > 255) {
+
+            if (b * factor > 255) {
                 b = 255;
+            } else {
+                b *= factor;
             }
 
             set_pixel(*dest, i, j, (uint8_t)r, (uint8_t)g, (uint8_t)b);

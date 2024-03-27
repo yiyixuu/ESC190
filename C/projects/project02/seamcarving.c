@@ -90,6 +90,7 @@ void recover_path(double *best, int height, int width, int **path) {
             (*path)[i] = min_j;
         }
     }
+
 }
 
 void remove_seam(struct rgb_img *src, struct rgb_img **dest, int *path) {
@@ -106,16 +107,16 @@ void remove_seam(struct rgb_img *src, struct rgb_img **dest, int *path) {
 
 }
 
-int main() {
-    struct rgb_img *im;
+int main () {
+      struct rgb_img *im;
     struct rgb_img *cur_im;
     struct rgb_img *grad;
     double *best;
     int *path;
 
-    read_in_img(&im, "chase.bin");
+    read_in_img(&im, "HJoceanSmall.bin");
     
-    for(int i = 0; i < 300; i++){
+    for(int i = 0; i < 450; i++){
         printf("i = %d\n", i);
         calc_energy(im,  &grad);
         dynamic_seam(grad, &best);
@@ -123,7 +124,7 @@ int main() {
         remove_seam(im, &cur_im, path);
 
         char filename[200];
-        sprintf(filename, "chase%d.bin", i);
+        sprintf(filename, "img%d.bin", i);
         write_img(cur_im, filename);
 
 
