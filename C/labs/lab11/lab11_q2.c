@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 void bfs(int adjacency_matrix[6][6], int start_node) {
-    int visited[6];
-    int ds[6]; // queue
+    int visited[6] = {0};
+    int ds[6] = {0}; // queue
     int front = 0;
     int rear = 0;
 
@@ -23,12 +23,11 @@ void bfs(int adjacency_matrix[6][6], int start_node) {
             }
         }
     }
-    printf("done\n");
 }
 
 void dfs(int adjacency_matrix[6][6], int start_node) {
-    int visited[6];
-    int ds[6]; // stack
+    int visited[6] = {0};
+    int ds[6] = {0}; // stack
     int top = 0;
 
     ds[top] = start_node;
@@ -47,7 +46,6 @@ void dfs(int adjacency_matrix[6][6], int start_node) {
             }
         }
     }
-    printf("done\n");
 }
 
 int main() {
@@ -63,16 +61,6 @@ int main() {
 
     bfs(adjacency_matrix, 0);
 
-    int adjacency_matrix2[6][6] = {
-//       1  2  3  4  5  6
-        {0, 0, 1, 0, 0, 1}, // 1
-        {0, 0, 1, 0, 1, 0}, // 2
-        {1, 1, 0, 1, 1, 0}, // 3
-        {0, 0, 1, 0, 1, 0}, // 4
-        {0, 1, 1, 1, 0, 1}, // 5
-        {1, 0, 0, 0, 1, 0}  // 6
-    };
-
-    dfs(adjacency_matrix2, 0);
+    dfs(adjacency_matrix, 0);
 
 }
