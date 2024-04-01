@@ -125,6 +125,6 @@ int main() {
         current_node = current_node->next;
     }
     
-    is_linked(adj, nodes, "YYZ", "YOW");
+    is_linked(adj, nodes, "YOW", "YVR");
 
 }
